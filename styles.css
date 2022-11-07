@@ -1,0 +1,21 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+}
+
+body {
+    background-color: black;
+    color: white;
+}
+
+.nav-elements {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.my-chart {
+    transform: rotateY(180deg);
+}
