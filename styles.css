@@ -32,3 +32,38 @@ div.header-right > i {
     transform: rotateY(180deg);
 }
 
+.my-kb-row-wrapper {
+    width: 45%;
+    margin: 10px auto;
+
+}
+
+.my-kb-row button {
+    height: 55px;
+    width: 45px;
+    border-radius: 8px;
+    color: white;
+    border: 1px solid black;
+    background-color: darkgrey;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.my-kb-row {
+    padding-top: 10px; 
+}
+
+#my-enter-btn, #my-clear-btn {
+    height: 55px;
+    width: 68px;
+}
+
+.second-row {
+    margin-left: 22px;
+}
+
+
+
+.key-uppercase  button{
+    text-transform: uppercase;
+}
