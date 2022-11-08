@@ -5,6 +5,8 @@
 
 }
 
+/* Navigation bar styling */
+
 .hz-line {
     border-bottom: 1px solid rgb(60, 60, 60);
 }
@@ -32,6 +34,8 @@ div.header-right > i {
     transform: rotateY(180deg);
 }
 
+/* Keyboard module styling */
+
 .my-kb-row-wrapper {
     width: 45%;
     margin: 10px auto;
@@ -58,12 +62,44 @@ div.header-right > i {
     width: 68px;
 }
 
-.second-row {
+.kb-second-row {
     margin-left: 22px;
 }
 
-
-
 .key-uppercase  button{
     text-transform: uppercase;
+}
+
+/* Word Holder styling */
+
+.my-grid-container {
+    margin: 20px auto;
+}
+
+.grid-wrapper-container {
+    width: 30%;
+    margin: 0 auto;
+}
+
+.my-word-grid-wrapper {
+    height: 380px;
+    width: 320px;
+    display: grid;
+    grid-template-rows: repeat(6, 1fr);
+    gap: 5px;
+}
+
+.my-word-grid {
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+    gap: 6px;
+}
+
+.my-word-grid .grid-cell {
+    border: 2px solid rgb(60, 60, 60);
+    font-size: 35px;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 1px;
+    
 }
