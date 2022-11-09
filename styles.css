@@ -70,6 +70,10 @@ div.header-right > i {
     text-transform: uppercase;
 }
 
+.my-clear-btn-nme {
+    display: none;
+}
+
 /* Word Holder styling */
 
 .my-grid-container {
