@@ -108,3 +108,6 @@ div.header-right > i {
     border-radius: 1px;
     
 }
+button{
+    user-select: none;
+}
