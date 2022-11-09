@@ -79,6 +79,7 @@ div.header-right > i {
 .grid-wrapper-container {
     width: 30%;
     margin: 0 auto;
+    text-transform: uppercase;
 }
 
 .my-word-grid-wrapper {
