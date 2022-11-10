@@ -1,4 +1,4 @@
-// let secretWord = ["B", "E", "G", "I", "N"];
+//let secretWord = ["B", "E", "G", "I", "N"];
 
 let kbModule = document.querySelector(".my-kb-row-wrapper");
 let gridRows = document.querySelectorAll(".my-word-grid");
@@ -7,12 +7,31 @@ let clearbtn = document.querySelector("#my-clear-btn");
 let rowCntr = counter(0); // Row counter initislised
 let colCntr = counter(0); // Column counter also initialised
 
-kbModule.onclick = function (e) {
-    let key = clickedKey(e);
+/* ##### Functionality implementation using UI Keybord module/App starts #####*/
 
+kbModule.onclick = function (e) {
+    let key = clickedKey(e).toUpperCase();
+    setGridData(key);
+};
+
+/* #####Functionality implementation using UI Keybord module/App Ends #####*/
+
+/* #####Functionality implementation using Device Keybopard starts #####*/
+
+document.onkeyup = function (e) {
+    let key = e.key.toUpperCase();
+    setGridData(key);
+};
+
+/* ##### Functionality implementation using Device Keybopard Ends ##### */
+
+function setGridData(key) {
     if (rowCntr.currCount() < 6) {
         if (key !== "ENTER" && colCntr.currCount() < 6) {
-            if (key == "clear" && colCntr.currCount() >= 0) {
+            if (
+                (key == "CLEAR" || key == "BACKSPACE") &&
+                colCntr.currCount() >= 0
+            ) {
                 colCntr.decCount();
                 clearCellData(rowCntr.currCount(), colCntr.currCount());
 
@@ -20,7 +39,7 @@ kbModule.onclick = function (e) {
                     colCntr.decCount();
                 }
             } else {
-                enterCellData(key, rowCntr.currCount(), colCntr.currCount());
+                setCellData(key, rowCntr.currCount(), colCntr.currCount());
             }
 
             if (colCntr.currCount() != 5) {
@@ -35,10 +54,10 @@ kbModule.onclick = function (e) {
             }
         }
     }
-};
+}
 
 //function to enter cell data in a row
-function enterCellData(data, rowNum, colNum) {
+function setCellData(data, rowNum, colNum) {
     if (colNum > -1 && colNum < 5) {
         gridRows[rowNum].children[colNum].textContent = data;
     }
