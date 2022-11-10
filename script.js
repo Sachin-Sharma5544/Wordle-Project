@@ -1,4 +1,4 @@
-//let secretWord = ["B", "E", "G", "I", "N"];
+let secretWord = ["B", "E", "G", "I", "N"];
 
 let kbModule = document.querySelector(".my-kb-row-wrapper");
 let gridRows = document.querySelectorAll(".my-word-grid");
@@ -47,6 +47,10 @@ function setGridData(key) {
             }
         } else if (key == "ENTER") {
             if (colCntr.currCount() == 5) {
+                wordComparison(
+                    secretWord,
+                    typedWord(gridRows[rowCntr.currCount()])
+                );
                 rowCntr.incCount();
                 colCntr = counter(0);
             } else {
@@ -78,6 +82,19 @@ function clickedKey(e) {
     } else {
         return "clear";
     }
+}
+
+function typedWord(gridRowData) {
+    let typedWord = [];
+    for (let i = 0; i < gridRowData.children.length; i++) {
+        typedWord.push(gridRowData.children[i].innerText);
+    }
+    return typedWord;
+}
+
+function wordComparison(secretWord, userWord) {
+    console.log(secretWord);
+    console.log(userWord);
 }
 
 //Counter inplementation for accessing Rows and Columns of grid
