@@ -3,6 +3,7 @@ let secretWord = ["B", "E", "G", "I", "N"];
 let kbModule = document.querySelector(".my-kb-row-wrapper");
 let gridRows = document.querySelectorAll(".my-word-grid");
 let clearbtn = document.querySelector("#my-clear-btn");
+console.log(gridRows);
 
 let rowCntr = counter(0); // Row counter initislised
 let colCntr = counter(0); // Column counter also initialised
@@ -10,7 +11,6 @@ let colCntr = counter(0); // Column counter also initialised
 /* ##### Functionality implementation using UI Keybord module/App starts #####*/
 
 kbModule.onclick = function (e) {
-    console.log(e);
     let key = clickedKey(e).toUpperCase();
     key = setGridData(key);
 };
@@ -20,7 +20,6 @@ kbModule.onclick = function (e) {
 /* #####Functionality implementation using Device Keybopard starts #####*/
 
 document.onkeyup = function (e) {
-    console.log(e);
     let key = e.key.toUpperCase();
     setGridData(key);
 };
@@ -49,9 +48,11 @@ function setGridData(key) {
             }
         } else if (key == "ENTER") {
             if (colCntr.currCount() == 5) {
+                //console.log(rowCntr.currCount(), "correct");
                 wordComparison(
                     secretWord,
-                    typedWord(gridRows[rowCntr.currCount()])
+                    typedWord(gridRows[rowCntr.currCount()]),
+                    rowCntr.currCount()
                 );
                 rowCntr.incCount();
                 colCntr = counter(0);
@@ -79,7 +80,6 @@ function clearCellData(rowNum, colNum) {
 //function to find the clicked key
 function clickedKey(e) {
     //console.log(ev.target.innerText);
-    console.log(e);
     if (e.target.name == undefined) {
         //return e.target.innerText;
         return "clear";
@@ -96,9 +96,63 @@ function typedWord(gridRowData) {
     return typedWord;
 }
 
-function wordComparison(secretWord, userWord) {
-    console.log(secretWord);
-    console.log(userWord);
+function wordComparison(secretWord, userWord, rowNum) {
+    if (wordMatch(secretWord, userWord, rowNum).toLowerCase() == "full match") {
+        styleFullMatchElements(rowNum);
+    } else if (
+        wordMatch(secretWord, userWord, rowNum).toLowerCase() == "partial match"
+    ) {
+        console.log("partial match");
+        stylePartialMatchElements(secretWord, userWord, rowNum);
+    } else if (
+        wordMatch(secretWord, userWord, rowNum).toLowerCase() == "no match"
+    ) {
+        console.log("No Match");
+    }
+}
+
+function wordMatch(secretWord, userWord, rowNum) {
+    if (fullMatch(secretWord, userWord) == true) {
+        return "Full Match";
+    } else if (chkPartialMatch(secretWord, userWord, rowNum)) {
+        return "Partial Match";
+    } else {
+        return "No Match";
+    }
+}
+
+function styleFullMatchElements(rowNum) {
+    for (let i = 0; i < gridRows[rowNum].childElementCount; i++) {
+        gridRows[rowNum].children[i].style.backgroundColor = "rgb(23, 247, 23)";
+        gridRows[rowNum].children[i].style.border = "2px solid rgb(5, 101, 5);";
+    }
+}
+
+function stylePartialMatchElements(secretWord, userWord, rowNum) {
+    for (let i = 0; i < gridRows[rowNum].childElementCount; i++) {
+        if (secretWord[i] == userWord[i]) {
+            gridRows[rowNum].children[i].style.backgroundColor =
+                "rgb(23, 247, 23)";
+            gridRows[rowNum].children[i].style.border =
+                "2px solid rgb(5, 101, 5);";
+        }
+    }
+}
+
+function fullMatch(secretWord, userWord) {
+    if (secretWord.join("") == userWord.join("")) return true;
+    if (secretWord.join("") != userWord.join("")) return false;
+}
+
+function chkPartialMatch(secretWord, userWord, rowNum) {
+    let matchCount = 0;
+    for (let i = 0; i < gridRows[rowNum].childElementCount; i++) {
+        if (secretWord[i] == userWord[i]) {
+            matchCount++;
+        }
+    }
+    if (matchCount > 0) return true;
+    if (matchCount <= 0) return false;
 }
 
 //Counter inplementation for accessing Rows and Columns of grid
