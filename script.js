@@ -10,8 +10,9 @@ let colCntr = counter(0); // Column counter also initialised
 /* ##### Functionality implementation using UI Keybord module/App starts #####*/
 
 kbModule.onclick = function (e) {
+    console.log(e);
     let key = clickedKey(e).toUpperCase();
-    setGridData(key);
+    key = setGridData(key);
 };
 
 /* #####Functionality implementation using UI Keybord module/App Ends #####*/
@@ -19,6 +20,7 @@ kbModule.onclick = function (e) {
 /* #####Functionality implementation using Device Keybopard starts #####*/
 
 document.onkeyup = function (e) {
+    console.log(e);
     let key = e.key.toUpperCase();
     setGridData(key);
 };
@@ -77,10 +79,12 @@ function clearCellData(rowNum, colNum) {
 //function to find the clicked key
 function clickedKey(e) {
     //console.log(ev.target.innerText);
-    if (e.target.innerText != "") {
-        return e.target.innerText;
-    } else {
+    console.log(e);
+    if (e.target.name == undefined) {
+        //return e.target.innerText;
         return "clear";
+    } else {
+        return e.target.name;
     }
 }
 
