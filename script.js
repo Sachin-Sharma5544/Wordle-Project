@@ -1,9 +1,8 @@
 let secretWord = ["B", "E", "G", "I", "N"];
-
 let kbModule = document.querySelector(".my-kb-row-wrapper");
 let gridRows = document.querySelectorAll(".my-word-grid");
 let clearbtn = document.querySelector("#my-clear-btn");
-console.log(gridRows);
+//console.log(gridRows);
 
 let rowCntr = counter(0); // Row counter initislised
 let colCntr = counter(0); // Column counter also initialised
@@ -88,36 +87,39 @@ function clickedKey(e) {
     }
 }
 
-function typedWord(gridRowData) {
+function typedWord(gridRowNum) {
     let typedWord = [];
-    for (let i = 0; i < gridRowData.children.length; i++) {
-        typedWord.push(gridRowData.children[i].innerText);
+    for (let i = 0; i < gridRowNum.children.length; i++) {
+        typedWord.push(gridRowNum.children[i].innerText);
     }
+    console.log("the typed word is ", typedWord);
     return typedWord;
 }
 
 function wordComparison(secretWord, userWord, rowNum) {
-    if (wordMatch(secretWord, userWord, rowNum).toLowerCase() == "full match") {
+    let wordMatchVal = wordMatch(secretWord, userWord, rowNum).toLowerCase();
+
+    if (wordMatchVal == "full match") {
         styleFullMatchElements(rowNum);
-    } else if (
-        wordMatch(secretWord, userWord, rowNum).toLowerCase() == "partial match"
-    ) {
-        console.log("partial match");
-        stylePartialMatchElements(secretWord, userWord, rowNum);
-    } else if (
-        wordMatch(secretWord, userWord, rowNum).toLowerCase() == "no match"
-    ) {
-        console.log("No Match");
+    } else if (wordMatchVal == "partial match") {
+        console.log("now styling partial match elements");
+    } else if (wordMatchVal == "no match") {
+        console.log("now styling no match elements");
     }
 }
 
-function wordMatch(secretWord, userWord, rowNum) {
-    if (fullMatch(secretWord, userWord) == true) {
+function wordMatch(secretWord, userWord) {
+    let chkFullMatchVal = chkFullMatch(secretWord, userWord).toLowerCase();
+    let chkPartialMatchVal = chkPartialMatch(secretWord, userWord);
+
+    if (chkFullMatchVal == "full match") {
         return "Full Match";
-    } else if (chkPartialMatch(secretWord, userWord, rowNum)) {
-        return "Partial Match";
-    } else {
-        return "No Match";
+    } else if (chkFullMatchVal == "check partial match") {
+        if (chkPartialMatchVal == true) {
+            return "Partial Match";
+        } else {
+            return "No Match";
+        }
     }
 }
 
@@ -139,20 +141,24 @@ function stylePartialMatchElements(secretWord, userWord, rowNum) {
     }
 }
 
-function fullMatch(secretWord, userWord) {
-    if (secretWord.join("") == userWord.join("")) return true;
-    if (secretWord.join("") != userWord.join("")) return false;
+function chkFullMatch(secretWord, userWord) {
+    if (secretWord.join("") == userWord.join("")) {
+        return "Full Match";
+    } else {
+        return "Check Partial Match";
+    }
 }
 
-function chkPartialMatch(secretWord, userWord, rowNum) {
-    let matchCount = 0;
-    for (let i = 0; i < gridRows[rowNum].childElementCount; i++) {
-        if (secretWord[i] == userWord[i]) {
-            matchCount++;
+function chkPartialMatch(secretWord, userWord) {
+    let partialMatchFlag = false;
+
+    for (let i = 0; i < userWord.length; i++) {
+        if (userWord.indexOf(secretWord[i]) > -1) {
+            partialMatchFlag = true;
+            break;
         }
     }
-    if (matchCount > 0) return true;
-    if (matchCount <= 0) return false;
+    return partialMatchFlag;
 }
 
 //Counter inplementation for accessing Rows and Columns of grid
