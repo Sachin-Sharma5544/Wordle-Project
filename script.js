@@ -3,7 +3,7 @@ let kbModule = document.querySelector(".my-kb-row-wrapper");
 let gridRows = document.querySelectorAll(".my-word-grid");
 let clearbtn = document.querySelector("#my-clear-btn");
 
-//console.log(gridRows);
+console.log(gridRows);
 
 let rowCntr = counter(0); // Row counter initislised
 let colCntr = counter(0); // Column counter also initialised
@@ -12,7 +12,7 @@ let colCntr = counter(0); // Column counter also initialised
 
 kbModule.onclick = function (e) {
     let key = clickedKey(e).toUpperCase();
-    key = setGridData(key);
+    setGridData(key);
 };
 
 /* #####Functionality implementation using UI Keybord module/App Ends #####*/
@@ -67,7 +67,7 @@ function setGridData(key) {
                             "You guessed it Right!!! Click ok to reset the game"
                         );
                         resetStyles();
-                    }, 3000);
+                    }, 000);
                 } else {
                     rowCntr.incCount();
                     colCntr = counter(0);
