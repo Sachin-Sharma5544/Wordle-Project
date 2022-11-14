@@ -7,11 +7,14 @@ function stylePartialMatch(arr1, arr2) {
         if (arr1.includes(arr2[i])) {
             if (arr1.indexOf(arr2[i]) == arr2.indexOf(arr2[i])) {
                 console.log("style green", arr2[i]);
+                console.log("style green", i);
             } else {
                 console.log("style yellow", arr2[i]);
+                console.log("style yellow", i);
             }
         } else {
             console.log("style black", arr2[i]);
+            console.log("style black", i);
         }
     }
 }

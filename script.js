@@ -2,6 +2,7 @@ let secretWord = ["B", "E", "G", "I", "N"];
 let kbModule = document.querySelector(".my-kb-row-wrapper");
 let gridRows = document.querySelectorAll(".my-word-grid");
 let clearbtn = document.querySelector("#my-clear-btn");
+
 //console.log(gridRows);
 
 let rowCntr = counter(0); // Row counter initislised
@@ -47,14 +48,24 @@ function setGridData(key) {
             }
         } else if (key == "ENTER") {
             if (colCntr.currCount() == 5) {
-                //console.log(rowCntr.currCount(), "correct");
-                wordComparison(
-                    secretWord,
-                    typedWord(gridRows[rowCntr.currCount()]),
-                    rowCntr.currCount()
-                );
+                let userWord = typedWord(gridRows[rowCntr.currCount()]);
+                wordComparison(secretWord, userWord, rowCntr.currCount());
                 rowCntr.incCount();
                 colCntr = counter(0);
+
+                // let wordCompVal = wordComparison(
+                //     secretWord,
+                //     userWord,
+                //     rowCntr.currCount()
+                // );
+                //     colCntr = counter(0);
+                // if (wordCompVal.toLowerCase() == "full match") {
+                //     rowCntr = counter(0);
+                //     colCntr = counter(0);
+                // } else {
+                //     rowCntr.incCount();
+                //     colCntr = counter(0);
+                // }
             } else {
                 alert("word is short");
             }
@@ -92,7 +103,6 @@ function typedWord(gridRowNum) {
     for (let i = 0; i < gridRowNum.children.length; i++) {
         typedWord.push(gridRowNum.children[i].innerText);
     }
-    console.log("the typed word is ", typedWord);
     return typedWord;
 }
 
@@ -101,10 +111,13 @@ function wordComparison(secretWord, userWord, rowNum) {
 
     if (wordMatchVal == "full match") {
         styleFullMatchElements(rowNum);
+        //return "full match";
     } else if (wordMatchVal == "partial match") {
-        console.log("now styling partial match elements");
+        stylePartialMatchElements(secretWord, userWord, rowNum);
+        //return "partial match";
     } else if (wordMatchVal == "no match") {
-        console.log("now styling no match elements");
+        styleNoMatchElements(rowNum);
+        //return "No Match";
     }
 }
 
@@ -125,21 +138,36 @@ function wordMatch(secretWord, userWord) {
 
 function styleFullMatchElements(rowNum) {
     for (let i = 0; i < gridRows[rowNum].childElementCount; i++) {
-        gridRows[rowNum].children[i].style.backgroundColor = "rgb(23, 247, 23)";
-        gridRows[rowNum].children[i].style.border = "2px solid rgb(5, 101, 5);";
+        gridRows[rowNum].children[i].style.backgroundColor = "rgb(4, 132, 4)";
+    }
+}
+
+function styleNoMatchElements(rowNum) {
+    for (let i = 0; i < gridRows[rowNum].childElementCount; i++) {
+        gridRows[rowNum].children[i].style.backgroundColor = "rgb(189, 36, 36)";
     }
 }
 
 function stylePartialMatchElements(secretWord, userWord, rowNum) {
-    for (let i = 0; i < gridRows[rowNum].childElementCount; i++) {
-        if (secretWord[i] == userWord[i]) {
+    for (let i = 0; i < userWord.length; i++) {
+        if (secretWord.includes(userWord[i])) {
+            if (
+                secretWord.indexOf(userWord[i]) == userWord.indexOf(userWord[i])
+            ) {
+                gridRows[rowNum].children[i].style.backgroundColor =
+                    "rgb(4, 132, 4)";
+            } else {
+                gridRows[rowNum].children[i].style.backgroundColor =
+                    "rgb(157, 157, 2)";
+            }
+        } else {
             gridRows[rowNum].children[i].style.backgroundColor =
-                "rgb(23, 247, 23)";
-            gridRows[rowNum].children[i].style.border =
-                "2px solid rgb(5, 101, 5);";
+                "rgb(189, 36, 36)";
         }
     }
 }
+
+function resetStyles() {}
 
 function chkFullMatch(secretWord, userWord) {
     if (secretWord.join("") == userWord.join("")) {
@@ -151,7 +179,6 @@ function chkFullMatch(secretWord, userWord) {
 
 function chkPartialMatch(secretWord, userWord) {
     let partialMatchFlag = false;
-
     for (let i = 0; i < userWord.length; i++) {
         if (userWord.indexOf(secretWord[i]) > -1) {
             partialMatchFlag = true;
