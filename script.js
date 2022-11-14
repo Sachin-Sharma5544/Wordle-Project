@@ -49,23 +49,29 @@ function setGridData(key) {
         } else if (key == "ENTER") {
             if (colCntr.currCount() == 5) {
                 let userWord = typedWord(gridRows[rowCntr.currCount()]);
-                wordComparison(secretWord, userWord, rowCntr.currCount());
-                rowCntr.incCount();
-                colCntr = counter(0);
+                // wordComparison(secretWord, userWord, rowCntr.currCount());
+                // rowCntr.incCount();
+                // colCntr = counter(0);
 
-                // let wordCompVal = wordComparison(
-                //     secretWord,
-                //     userWord,
-                //     rowCntr.currCount()
-                // );
-                //     colCntr = counter(0);
-                // if (wordCompVal.toLowerCase() == "full match") {
-                //     rowCntr = counter(0);
-                //     colCntr = counter(0);
-                // } else {
-                //     rowCntr.incCount();
-                //     colCntr = counter(0);
-                // }
+                let wordCompVal = wordComparison(
+                    secretWord,
+                    userWord,
+                    rowCntr.currCount()
+                );
+                colCntr = counter(0);
+                if (wordCompVal.toLowerCase() == "full match") {
+                    rowCntr = counter(0);
+                    colCntr = counter(0);
+                    setTimeout(function () {
+                        alert(
+                            "You guessed it Right!!! Click ok to reset the game"
+                        );
+                        resetStyles();
+                    }, 3000);
+                } else {
+                    rowCntr.incCount();
+                    colCntr = counter(0);
+                }
             } else {
                 alert("word is short");
             }
@@ -111,13 +117,13 @@ function wordComparison(secretWord, userWord, rowNum) {
 
     if (wordMatchVal == "full match") {
         styleFullMatchElements(rowNum);
-        //return "full match";
+        return "full match";
     } else if (wordMatchVal == "partial match") {
         stylePartialMatchElements(secretWord, userWord, rowNum);
-        //return "partial match";
+        return "partial match";
     } else if (wordMatchVal == "no match") {
         styleNoMatchElements(rowNum);
-        //return "No Match";
+        return "No Match";
     }
 }
 
@@ -167,7 +173,14 @@ function stylePartialMatchElements(secretWord, userWord, rowNum) {
     }
 }
 
-function resetStyles() {}
+function resetStyles() {
+    for (let i = 0; i < gridRows.length; i++) {
+        for (let j = 0; j < gridRows[i].children.length; j++) {
+            gridRows[i].children[j].style.backgroundColor = "";
+            gridRows[i].children[j].textContent = "";
+        }
+    }
+}
 
 function chkFullMatch(secretWord, userWord) {
     if (secretWord.join("") == userWord.join("")) {
