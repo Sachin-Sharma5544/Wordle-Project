@@ -70,7 +70,7 @@ function setGridData(key) {
                             "You guessed it Right!!! Click ok to reset the game"
                         );
                         resetStyles();
-                    }, 000);
+                    }, 1000);
                 } else {
                     rowCntr.incCount();
                     colCntr = counter(0);
