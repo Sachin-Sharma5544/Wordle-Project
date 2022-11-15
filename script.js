@@ -1,9 +1,7 @@
-let secretWord = ["B", "E", "G", "I", "N"];
+let secretWord = generateSecretWord();
 let kbModule = document.querySelector(".my-kb-row-wrapper");
 let gridRows = document.querySelectorAll(".my-word-grid");
 let clearbtn = document.querySelector("#my-clear-btn");
-
-console.log(gridRows);
 
 let rowCntr = counter(0); // Row counter initislised
 let colCntr = counter(0); // Column counter also initialised
@@ -63,14 +61,15 @@ function setGridData(key) {
                 );
                 colCntr = counter(0);
                 if (wordCompVal.toLowerCase() == "full match") {
-                    rowCntr = counter(0);
-                    colCntr = counter(0);
                     setTimeout(function () {
                         alert(
-                            "You guessed it Right!!! Click ok to reset the game"
+                            "You Are Genius!!! Please click on OK button to RESET"
                         );
                         resetStyles();
+                        secretWord = generateSecretWord();
                     }, 1000);
+                    rowCntr = counter(0);
+                    colCntr = counter(0);
                 } else {
                     rowCntr.incCount();
                     colCntr = counter(0);
@@ -275,6 +274,36 @@ function ignoreKeys() {
     return keyArray;
 }
 
+function generateSecretWord() {
+    let randIndx;
+    let secretWord = [
+        "ACUTE",
+        "ALIKE",
+        "AGENT",
+        "ABOUT",
+        "ANGRY",
+        "ADMIT",
+        "BOGUS",
+        "BEING",
+        "BEACH",
+        "BLIND",
+        "BLOCK",
+        "PIZZA",
+        "THINK",
+        "TWICE",
+        "STICK",
+        "TRUCK",
+        "THEFT",
+        "TRULY",
+        "STOCK",
+        "STONE",
+    ];
+
+    randIndx = Math.round(Math.random() * (secretWord.length - 1));
+
+    return secretWord[randIndx].split("");
+}
+
 //Counter inplementation for accessing Rows and Columns of grid
 function counter(initialVal) {
     let count = initialVal;
@@ -296,3 +325,5 @@ function counter(initialVal) {
         currCount: currCount,
     };
 }
+
+generateSecretWord();
