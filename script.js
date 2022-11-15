@@ -20,8 +20,11 @@ kbModule.onclick = function (e) {
 /* #####Functionality implementation using Device Keybopard starts #####*/
 
 document.onkeyup = function (e) {
+    let keyArray = ignoreKeys();
     let key = e.key.toUpperCase();
-    setGridData(key);
+    if (!keyArray.includes(key)) {
+        setGridData(key);
+    }
 };
 
 /* ##### Functionality implementation using Device Keybopard Ends ##### */
@@ -199,6 +202,77 @@ function chkPartialMatch(secretWord, userWord) {
         }
     }
     return partialMatchFlag;
+}
+
+function ignoreKeys() {
+    let keyArray = [
+        "TAB",
+        "CAPSLOCK",
+        "SHIFT",
+        "CONTROL",
+        "ALT",
+        "META",
+        " ",
+        "ARROWLEFT",
+        "ARROWUP",
+        "ARROWDOWN",
+        "ARROWRIGHT",
+        "ESCAPE",
+        "`",
+        "~",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "0",
+        "-",
+        "_",
+        "+",
+        "=",
+        "{",
+        "}",
+        "[",
+        "]",
+        "|",
+        "/",
+        "'",
+        '"',
+        ":",
+        ";",
+        "?",
+        ",",
+        "<",
+        ">",
+        "!",
+        "@",
+        "#",
+        "$",
+        "%",
+        "^",
+        "&",
+        "*",
+        "(",
+        ")",
+        "\\",
+        "F1",
+        "F2",
+        "F3",
+        "F4",
+        "F5",
+        "F6",
+        "F7",
+        "F8",
+        "F9",
+        "F10",
+        "F11",
+        "F12",
+    ];
+    return keyArray;
 }
 
 //Counter inplementation for accessing Rows and Columns of grid
